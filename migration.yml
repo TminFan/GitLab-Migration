@@ -1,0 +1,18 @@
+name: migrate-ecs-gitlab
+run-name: Migrate GitLab repo
+on: [push]
+  # workflow_dispatch
+  #   inputs:
+  #     repo_https:
+  #       description: "GitLab repo clone HTTPS"
+  #       required: true
+  #       type: string
+
+jobs:
+  validate-config:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Check out the repository o the runner
+      uses: actions/checkout@v4
+    - name: Validate docker and github cli installed
+      run: ./verify-installation.sh
