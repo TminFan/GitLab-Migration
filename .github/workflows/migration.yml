@@ -10,9 +10,9 @@ on: [push]
 
 jobs:
   validate-config:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Check out the repository o the runner
-      uses: actions/checkout@v4
-    - name: Validate docker and github cli installed
-      run: ./verify-installation.sh
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository o the runner
+        uses: actions/checkout@v4
+      - name: Validate docker and github cli installed
+        run: ./verify-installation.sh
