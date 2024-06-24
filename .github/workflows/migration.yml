@@ -16,5 +16,9 @@ jobs:
         uses: actions/checkout@v4
       - name: Check file permission
         run: ls -la ./verify-installation.sh
+      - name: Change file permission
+        run: |
+          chmod +x ./verify-installation.sh
+          ls -la ./verify-installation.sh
       - name: Validate docker and github cli installed
         run: ./verify-installation.sh
