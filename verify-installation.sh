@@ -13,3 +13,8 @@ if [ ! -f /.dockerenv ]; then
 fi
 
 echo "INFO: Sucessfully verified docker installation!"
+
+# install github actions importer cli extension
+gh extension install github/gh-actions-importer
+# verify if the extension is installed
+$ gh actions-importer -h
