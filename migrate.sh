@@ -12,8 +12,8 @@ if [[ -n $GH_TOKEN && -n $GITLAB_ACCESS_TOKEN ]]; then
     then
         gh repo create "$github_repo_name" --private --source .
     fi
-    git clone -bare https://"$gitlab_user_name":"$GITLAB_ACCESS_TOKEN"@"$gitlab_repo_name"
-    git push -mirror https://github.com/"$github_user_name"/"$github_repo_name".git
+    git clone --bare "$gitlab_user_name":"$GITLAB_ACCESS_TOKEN"@"$gitlab_repo_name"
+    git push --mirror https://github.com/"$github_user_name"/"$github_repo_name".git
 else
     echo "EROOR: Tokens are not set in the environment variables."
     exit 1
