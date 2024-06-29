@@ -4,7 +4,7 @@ github_repo_name=$1
 github_user_name=$2
 gitlab_repo_url=$3
 gitlab_user_name=$4
-gitlab_repo_name=$(basename "$gitlab_repo_url" .git)
+gitlab_repo_name=$(basename "$gitlab_repo_url")
 
 
 if [[ -n $GH_TOKEN && -n $GITLAB_ACCESS_TOKEN ]]; then
