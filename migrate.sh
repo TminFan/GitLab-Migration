@@ -6,7 +6,7 @@ gitlab_repo_name=$3
 gitlab_user_name=$4
 
 if [[ -n $GH_TOKEN && -n $GITLAB_ACCESS_TOKEN ]]; then
-    git ls-remote --heads --exit-codehttps://github.com/"$github_user_name"/"$github_repo_name"/git >/dev/null
+    git ls-remote --heads --exit-code https://github.com/"$github_user_name"/"$github_repo_name"/git >/dev/null
     echo "Does the GitHub repo $github_repo_name exist already? exit code is $?"
     if [ "$?" > "0" ]
     then
