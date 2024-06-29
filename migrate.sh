@@ -2,8 +2,9 @@
 
 github_repo_name=$1
 github_user_name=$2
-gitlab_repo_name=$3
+gitlab_repo_url=$3
 gitlab_user_name=$4
+gitlab_repo_name=$(basename "$gitlab_repo_url" .git)
 
 
 if [[ -n $GH_TOKEN && -n $GITLAB_ACCESS_TOKEN ]]; then
@@ -13,7 +14,7 @@ if [[ -n $GH_TOKEN && -n $GITLAB_ACCESS_TOKEN ]]; then
     then
         gh repo create "$github_repo_name" --private --source .
     fi
-    git clone --bare https://"$gitlab_user_name":"$GITLAB_ACCESS_TOKEN"@"$gitlab_repo_name"
+    git clone --bare https://"$gitlab_user_name":"$GITLAB_ACCESS_TOKEN"@"$gitlab_repo_url"
     ls
     cd $gitlab_repo_name
     git push --mirror https://$github_user_name:$GH_TOKEN@github.com/"$github_user_name"/"$github_repo_name".git
