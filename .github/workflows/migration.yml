@@ -44,5 +44,5 @@ jobs:
           if git ls-remote --heads --exit-code https://${{ github.event.inputs.github_user_name }}:${{ secrets.MIGRATION_PERSONAL_TOKEN }}@github.com/${{ github.event.inputs.github_user_name }}/${{ github.event.inputs.github_repo }}.git >/dev/null; then
             echo "Repository exists."
           else
-            echo "Repository not found or access denied."
+            echo "Repository not found or access denied. $?"
           fi
