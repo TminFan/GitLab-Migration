@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 github_repo_name=$1
 github_user_name=$2
