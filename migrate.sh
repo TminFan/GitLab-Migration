@@ -5,9 +5,10 @@ github_user_name=$2
 gitlab_repo_name=$3
 gitlab_user_name=$4
 
+git config --global credential.helper 'store --file=/tmp/git-credentials'
+echo "https://$github_user_name:$GH_TOKEN@github.com" > /tmp/git-credentials
+
 if [[ -n $GH_TOKEN && -n $GITLAB_ACCESS_TOKEN ]]; then
-    git config --global credential.helper 'store --file=/tmp/git-credentials'
-    echo "https://$github_user_name:$GH_TOKEN@github.com" > /tmp/git-credentials
     git ls-remote --heads --exit-code https://github.com/"$github_user_name"/"$github_repo_name".git >/dev/null
     echo "Does the GitHub repo $github_repo_name exist already? exit code is $?"
     if [ "$?" > "0" ]
