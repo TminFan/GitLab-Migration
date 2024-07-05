@@ -6,14 +6,14 @@ gitlab_user_name=$3
 gitlab_repo_name=$4
 
 
-if [[ -n $GH_TOKEN && -n $GITLAB_ACCESS_TOKEN ]]; then
+if [[ -n $GH_TOKEN && -n $GITLAB_TOKEN ]]; then
     git ls-remote --heads --exit-code https://$github_user_name:$GH_TOKEN@github.com/"$github_user_name"/"$github_repo_name".git >/dev/null
     echo "Does the GitHub repo $github_repo_name exist already? exit code is $?"
     if [ "$?" > "0" ]
     then
         gh repo create "$github_repo_name" --private --source .
     fi
-    git clone --bare https://"$gitlab_user_name":"$GITLAB_ACCESS_TOKEN"@"gitlab.ecs.vuw.ac.nz/$gitlab_user_name/$gitlab_repo_name.git"
+    git clone --bare https://"$gitlab_user_name":"$GITLAB_TOKEN"@"gitlab.ecs.vuw.ac.nz/$gitlab_user_name/$gitlab_repo_name.git"
     ls
     cd $gitlab_repo_name.git
     git push --mirror https://$github_user_name:$GH_TOKEN@github.com/"$github_user_name"/"$github_repo_name".git
