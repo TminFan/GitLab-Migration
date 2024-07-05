@@ -1,0 +1,35 @@
+name: migrate-gitlab-repo
+run-name: Migrate GitLab repo
+on:
+  workflow_dispatch:
+    inputs:
+      github_repo_name:
+        description: "GitHub repo name"
+        required: true
+        type: string
+      github_user_name:
+        description: "GitHub user name"
+        required: true
+        type: string
+      gitlab_repo_name:
+        description: "GitLab repo name"
+        required: true
+        type: string
+      gitlab_user_name:
+        description: "GitLab user name"
+        required: true
+        type: string
+
+jobs:
+  migrate_repo:
+    uses: ./.github/worflows/migration_template.yml@main
+    with:
+      migration_type: "repo"
+      script_file_path: "./repo-migration.sh"
+      github_user_name: ${{ github.event.inputs.github_user_name }}
+      github_repo_name: ${{ github.event.inputs.github_repo_name }}
+      gitlab_user_name: ${{ github.event.inputs.gitlab_user_name }}
+      gitlab_repo_name: ${{ github.event.inputs.gitlab_repo_name }}
+    secrets: 
+      GH_TOKEN: ${{ secrets.MIGRATION_PERSONAL_TOKEN }}
+      GITLAB_TOKEN: ${{ secrets.GITLAB_MIGRATION_PERSONAL_TOKEN }}
