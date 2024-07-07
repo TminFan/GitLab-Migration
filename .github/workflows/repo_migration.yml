@@ -22,7 +22,7 @@ on:
 
 jobs:
   migrate_repo:
-    uses: ./.github/workflows/migration_template.yml@feature/pipeline-migration
+    uses: ./.github/workflows/migration_template.yml
     with:
       migration_type: "repo"
       script_file_path: "./repo-migration.sh"

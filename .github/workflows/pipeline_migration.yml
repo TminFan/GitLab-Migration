@@ -27,7 +27,7 @@ on:
 
 jobs:
   config-github-actions-importer:
-    uses: ./.github/workflows/migration_template.yml@feature/pipeline-migration
+    uses: ./.github/workflows/migration_template.yml
     with:
       migration_type: "pipeline"
       script_file_path: "./pipelines-migration.sh"
