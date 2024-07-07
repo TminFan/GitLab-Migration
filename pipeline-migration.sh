@@ -13,12 +13,12 @@ echo $audit
 gh extension install github/gh-actions-importer
 
 # verify the actions importer extension is installed
-gh actions-importer -h
+gh actions-importer version
 
 # configure credentials
 if [[ -n $GH_TOKEN && -n $GITLAB_TOKEN ]]; then
-    create-gh-cli-credentials-file.sh $github_user_name $gitlab_user_name
-    gh actions-importer --credentials-file importer_auth.yml
+    ./create-gh-cli-credentials-file.sh $github_user_name $gitlab_user_name
+    gh actions-importer configure --credentials-file importer_auth.yml
     gh actions-importer update
     echo "Finished config github actions importer and update"
 else
