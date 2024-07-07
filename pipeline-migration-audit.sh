@@ -3,7 +3,7 @@
 gitlab_namespace=$1
 curr_repo_name=${{ github.repository }}
 
-gh actions-importer audit gitlab --output-dir tmp/audit --namespace $gitlab_namespace
+gh actions-importer audit gitlab --output-dir tmp/audit --namespace $gitlab_namespace --condentials-file importer_auth.yml
 
 content=$(<tmp/audit/audit_summary.md)
 content="${content//'%'/'%25'}"
