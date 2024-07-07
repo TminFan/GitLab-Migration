@@ -6,7 +6,7 @@ on:
       workflow_migration_audit:
         description: "Whether audit pipeline migration or not"
         required: false
-        default: false
+        default: true
         type: boolean
       github_repo_name:
         description: "GitHub repo name"
