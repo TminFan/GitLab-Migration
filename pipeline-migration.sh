@@ -5,8 +5,8 @@ github_user_name=$2
 github_repo_name=$3
 gitlab_user_name=$4
 gitlab_repo_name=$5
-github_base_url="https://github.com/$github_user_name"
-gitlab_base_url="https://gitlab.ecs.vuw.ac.nz/$gitlab_user_name"
+github_base_url="https://github.com/$github_user_name/"
+gitlab_base_url="https://gitlab.ecs.vuw.ac.nz"
 
 gh extension install github/gh-actions-importer
 
