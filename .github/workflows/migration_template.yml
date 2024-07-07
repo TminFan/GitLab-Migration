@@ -14,7 +14,7 @@ on:
             workflow_migration_audit:
                 description: "Whether audit pipeline migration or not"
                 required: false
-                default: true
+                default: false
                 type: boolean
             github_user_name:
                 description: "GitHub user name"
