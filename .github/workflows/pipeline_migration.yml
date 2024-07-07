@@ -30,7 +30,7 @@ jobs:
     uses: ./.github/workflows/migration_template.yml
     with:
       migration_type: "pipeline"
-      script_file_path: "./pipelines-migration.sh"
+      script_file_path: "./pipeline-migration.sh"
       workflow_migration_audit: ${{ github.event.inputs.workflow_migration_audit == true }}
       github_user_name: ${{ github.event.inputs.github_user_name }}
       github_repo_name: ${{ github.event.inputs.github_repo_name }}
