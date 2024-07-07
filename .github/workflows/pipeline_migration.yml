@@ -31,7 +31,7 @@ jobs:
     with:
       migration_type: "pipeline"
       script_file_path: "./pipelines-migration.sh"
-      workflow_migration_audit: ${{ github.event.inputs.workflow_migration_audit }}
+      workflow_migration_audit: ${{ github.event.inputs.workflow_migration_audit == true }}
       github_user_name: ${{ github.event.inputs.github_user_name }}
       github_repo_name: ${{ github.event.inputs.github_repo_name }}
       gitlab_user_name: ${{ github.event.inputs.gitlab_user_name }}
