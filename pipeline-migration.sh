@@ -8,6 +8,8 @@ gitlab_repo_name=$5
 github_base_url="https://github.com/$github_user_name/"
 gitlab_base_url="https://gitlab.ecs.vuw.ac.nz"
 
+echo $audit
+
 gh extension install github/gh-actions-importer
 
 # verify the actions importer extension is installed
@@ -29,5 +31,5 @@ if [[ "$audit" == "true" ]]; then
     ./pipeline-migration-audit.sh $gitlab_repo_name
 else
     echo "Start migrating pipelines"
-    gh actions-importer migrate gitlab --target-url "https://github.com/$github_user_name/$github_repo_name" --output-dir tmp/migrate --namespace $gitlab_user_name --project $gitlab_repo_name
+    gh actions-importer migrate gitlab --target-url "https://$github_user_name:$GH_TOKEN@github.com/$github_user_name/$github_repo_name" --output-dir tmp/migrate --namespace $gitlab_user_name --project $gitlab_repo_name
 fi
