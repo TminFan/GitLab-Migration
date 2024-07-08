@@ -1,6 +1,8 @@
 #!/bin/bash
 
 gitlab_namespace=$1
+github_user_name=$2
+github_repo_name=
 github_base_url="https://github.com"
 gitlab_base_url="https://gitlab.ecs.vuw.ac.nz"
 
@@ -17,10 +19,10 @@ curl \
 -X POST \
 -H "Accept: application/vnd.github.v3+json" \
 -H "Authorization: token $GH_TOKEN" \
-"https://api.github.com/repos/${{ github.repository }}/check-runs" \
+"https://api.github.com/repos/$CUR_GITHUB_REPO/check-runs" \
 -d "$(jq -n \
       --arg name "Markdown Summary Check" \
-      --arg head_sha "${{ github.sha }}" \
+      --arg head_sha $GITHUB_SHA \
       --arg title "Check Run Report" \
       --arg summary "$content" \
       --arg text "More details here" \

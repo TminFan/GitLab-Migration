@@ -69,5 +69,7 @@ jobs:
               if: ${{ inputs.migration_type == 'pipeline' }}
               env:
                 GH_TOKEN: ${{ secrets.GH_TOKEN }}
-                GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }} 
+                GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+                CUR_GITHUB_REPO: ${{ github.repository }}
+                GITHUB_SHA: ${{ github.sha }}
               run: ${{ inputs.script_file_path }} ${{ inputs.workflow_migration_audit }} ${{ inputs.github_user_name }} ${{ inputs.github_repo_name }} ${{ inputs.gitlab_user_name }} ${{ inputs.gitlab_repo_name }}      
