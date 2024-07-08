@@ -4,7 +4,7 @@ gitlab_namespace=$1
 github_base_url="https://github.com"
 gitlab_base_url="https://gitlab.ecs.vuw.ac.nz"
 
-gh actions-importer audit gitlab --gitlab-instance-url $gitlab_base_url --gitlab--access-token $GITLAB_TOKEN --github-instance-url $github_base_url --github-access-token $GH_TOKEN --output-dir tmp/audit --namespace $gitlab_namespace
+gh actions-importer audit gitlab --gitlab-instance-url $gitlab_base_url --gitlab-access-token $GITLAB_TOKEN --github-instance-url $github_base_url --github-access-token $GH_TOKEN --output-dir tmp/audit --namespace $gitlab_namespace
 
 ls tmp/audit/
 
