@@ -8,20 +8,20 @@ on:
         required: false
         default: true
         type: boolean
-      github_repo_name:
-        description: "GitHub repo name"
-        required: false
-        type: string
       github_user_name:
         description: "GitHub user name"
         required: false
         type: string
-      gitlab_repo_name:
-        description: "GitLab repo name"
+      github_repo_name:
+        description: "GitHub repo name"
         required: false
         type: string
       gitlab_user_name:
-        description: "GitLab user name"
+        description: "GitLab user or group name. Audit mode can only accept group name"
+        required: false
+        type: string
+      gitlab_repo_name:
+        description: "GitLab repo name"
         required: false
         type: string
 
@@ -34,7 +34,7 @@ jobs:
       workflow_migration_audit: ${{ github.event.inputs.workflow_migration_audit == 'true' }}
       github_user_name: "TminFan"
       github_repo_name: "swen304-project2"
-      gitlab_user_name: "fantian"
+      gitlab_user_name: "my_group"
       gitlab_repo_name: "swen304-project2"
     secrets: 
       GH_TOKEN: ${{ secrets.MIGRATION_PERSONAL_TOKEN }}
