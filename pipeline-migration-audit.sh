@@ -1,9 +1,10 @@
 #!/bin/bash
 
 gitlab_namespace=$1
-curr_repo_name=${{ github.repository }}
+# curr_repo_name=${{ github.repository }}
+curr_repo_name="TminFan/ecs_gitlab_migration"
 
-gh actions-importer audit gitlab --output-dir tmp/audit --namespace $gitlab_namespace --condentials-file importer_auth.yml
+gh actions-importer audit gitlab --output-dir tmp/audit --namespace $gitlab_namespace
 
 content=$(<tmp/audit/audit_summary.md)
 content="${content//'%'/'%25'}"

@@ -19,11 +19,17 @@ gh actions-importer version
 if [[ -n $GH_TOKEN && -n $GITLAB_TOKEN ]]; then
     chmod +x ./create-gh-cli-credential-file.sh
     ./create-gh-cli-credential-file.sh $github_user_name $gitlab_user_name
-    # gh actions-importer --credentials-file importer_auth.yml
-    gh actions-importer update
-    echo "Finished config github actions importer and update"
+    ls -la
+    gh actions-importer configure --credentials-file importer_auth.yml
+    # gh actions-importer update
+    if [ $? ]; then
+        echo "Finished config github actions importer and update"
+        exit 1
+    else
+        echo "ERROR: error with actions-importer configure"
+    fi
 else
-    echo "EROOR: Tokens are not set in the environment variables."
+    echo "ERROR: Tokens are not set in the environment variables."
     exit 1
 fi
 
