@@ -32,10 +32,10 @@ jobs:
       migration_type: "pipeline"
       script_file_path: "./pipeline-migration.sh"
       workflow_migration_audit: ${{ github.event.inputs.workflow_migration_audit == 'true' }}
-      github_user_name: "swen304-project2"
-      github_repo_name: "TminFan"
-      gitlab_user_name: "swen304-project2"
-      gitlab_repo_name: "fantian"
+      github_user_name: "TminFan"
+      github_repo_name: "swen304-project2"
+      gitlab_user_name: "fantian"
+      gitlab_repo_name: "swen304-project2"
     secrets: 
       GH_TOKEN: ${{ secrets.MIGRATION_PERSONAL_TOKEN }}
       GITLAB_TOKEN: ${{ secrets.GITLAB_MIGRATION_PERSONAL_TOKEN }}
