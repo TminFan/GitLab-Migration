@@ -17,8 +17,8 @@ content="${content//$'\r'/'%0D'}"
 
 curl \
 -X POST \
--H "Accept: application/vnd.github.v3+json" \
--H "Authorization: token $GH_TOKEN" \
+-H "Accept: application/vnd.github+json" \
+-H "Authorization: Bearer $GH_TOKEN" \
 "https://api.github.com/repos/$CUR_GITHUB_REPO/check-runs" \
 -d "$(jq -n \
       --arg name "Markdown Summary Check" \
