@@ -102,6 +102,15 @@ jobs:
             with:
               persist-credentials: false
 
+          - name: Download executable file
+            uses: actions/download-artifact@v4
+            with:
+              name: executable-file
+              path: ./
+
+          - name: Unpack the tar file
+            run: tar -xvf executable_file.tar
+
           - name: Run pipeline migration script
             env:
               GH_TOKEN: ${{ secrets.GH_TOKEN }}
