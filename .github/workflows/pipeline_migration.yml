@@ -8,33 +8,33 @@ on:
         required: false
         default: false
         type: boolean
+      github_user_name:
+        description: "GitHub user name"
+        required: true
+        type: string
       github_repo_name:
         description: "GitHub repo name"
         required: true
         type: string
-      github_user_name:
-        description: "GitHub user name"
+      gitlab_user_name:
+        description: "GitLab user or group name. Audit mode can only accept group name"
         required: true
         type: string
       gitlab_repo_name:
         description: "GitLab repo name"
         required: true
         type: string
-      gitlab_user_name:
-        description: "GitLab user name"
-        required: true
-        type: string
 
 jobs:
-  migrate_pipelines:
+  config-github-actions-importer:
     uses: ./.github/workflows/migration_template.yml
     with:
       migration_type: "pipeline"
-      script_file_path: "./pipelines-migration.sh"
-      workflow_migration_audit: ${{ github.event.inputs.workflow_migration_audit }}
+      script_file_path: "./pipeline-migration.sh"
+      workflow_migration_audit: ${{ github.event.inputs.workflow_migration_audit == 'true' }}
       github_user_name: ${{ github.event.inputs.github_user_name }}
       github_repo_name: ${{ github.event.inputs.github_repo_name }}
-      gitlab_user_name: ${{ github.event.inputs.gitlab_user_name }}
+      gitlab_user_name: ${{ github.event.inputs.gitlab_user_name}}
       gitlab_repo_name: ${{ github.event.inputs.gitlab_repo_name }}
     secrets: 
       GH_TOKEN: ${{ secrets.MIGRATION_PERSONAL_TOKEN }}
