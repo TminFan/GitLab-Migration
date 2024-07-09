@@ -32,6 +32,10 @@ on:
                 description: "GitLab repo name"
                 required: true
                 type: string
+            gitlab_base_url:
+              description: "GitLab base instance url. e.g. https://gitlab.com"
+              required: false
+              type: string
         secrets:
             GH_TOKEN:
                 description: "GitHub personal access token"
@@ -90,7 +94,7 @@ jobs:
               env:
                 GH_TOKEN: ${{ secrets.GH_TOKEN }}
                 GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }} 
-              run: ${{ inputs.script_file_path }} ${{ inputs.github_user_name }} ${{ inputs.github_repo_name }} ${{ inputs.gitlab_user_name }} ${{ inputs.gitlab_repo_name }}
+              run: ${{ inputs.script_file_path }} ${{ inputs.github_user_name }} ${{ inputs.github_repo_name }} ${{ inputs.gitlab_user_name }} ${{ inputs.gitlab_repo_name }} ${{ inputs.gitlab_base_url }}
 
     run-pipeline-migration-script:
         needs: validate-file-execution-permission
