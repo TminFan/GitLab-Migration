@@ -19,7 +19,11 @@ gh actions-importer update
 # configure credentials
 if [[ -n $GH_TOKEN && -n $GITLAB_TOKEN ]]; then
     if [[ "$audit" == "true" ]]; then
-        chmod +x ./pipeline-migration-audit.sh
+        if [[ -r ./pipeline-migration-audit.sh ]]; then
+            echo "script is executable."
+        else
+            chmod +x ./pipeline-migration-audit.sh
+        fi
         echo "Start pipeline migration audit"
         ./pipeline-migration-audit.sh $gitlab_user_name
     else
