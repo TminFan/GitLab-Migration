@@ -46,7 +46,9 @@ jobs:
       steps:
         - name: Check out the repository on the runner
           uses: actions/checkout@v4
-          
+          with:
+            persist-credentials: false
+
         - name: Validate if given file is executable
           run: |
             if [ -x ${{ inputs.script_file_path }} ]; then
