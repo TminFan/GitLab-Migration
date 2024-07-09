@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       workflow_migration_audit:
-        description: "Whether audit pipeline migration or not"
+        description: "Audit pipeline migration?"
         required: false
         default: false
         type: boolean
