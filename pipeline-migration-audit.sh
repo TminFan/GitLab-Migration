@@ -8,7 +8,6 @@ gitlab_base_url="https://gitlab.ecs.vuw.ac.nz"
 
 gh actions-importer audit gitlab --gitlab-instance-url $gitlab_base_url --gitlab-access-token $GITLAB_TOKEN --github-instance-url $github_base_url --github-access-token $GH_TOKEN --output-dir tmp/audit --namespace $gitlab_namespace
 
-ls tmp/audit/
 if [[ -f tmp/audit/audit_summary.md ]]; then
   echo "Migration audit report is found."
   content=$(cat tmp/audit/audit_summary.md)

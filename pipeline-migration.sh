@@ -8,8 +8,6 @@ gitlab_repo_name=$5
 github_base_url="https://github.com"
 gitlab_base_url="https://gitlab.ecs.vuw.ac.nz"
 
-echo $audit
-
 gh extension install github/gh-actions-importer
 
 # verify the actions importer extension is installed
