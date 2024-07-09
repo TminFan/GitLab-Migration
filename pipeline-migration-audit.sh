@@ -11,8 +11,8 @@ gh actions-importer audit gitlab --gitlab-instance-url $gitlab_base_url --gitlab
 ls tmp/audit/
 if [[ -f tmp/audit/audit_summary.md ]]; then
   echo "Migration audit report is found."
-  content=$(<tmp/audit/audit_summary.md)
-  echo "AUDIT_SUMMARY=$content" >> $GITHUB_ENV
+  content=$(cat tmp/audit/audit_summary.md)
+  echo "$content" >> $GITHUB_STEP_SUMMARY
 else
   echo "Migration audit report is not found."
   exit 1

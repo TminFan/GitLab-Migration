@@ -118,7 +118,3 @@ jobs:
               CUR_GITHUB_REPO: ${{ github.repository }}
               GITHUB_SHA: ${{ github.sha }}
             run: ${{ inputs.script_file_path }} ${{ inputs.workflow_migration_audit }} ${{ inputs.github_user_name }} ${{ inputs.github_repo_name }} ${{ inputs.gitlab_user_name }} ${{ inputs.gitlab_repo_name }}
-            
-          - name: Output audit content to workflow job summary
-            if: ${{ inputs.workflow_migration_audit == 'true' }} && ${{ success() }}
-            run: echo "$AUDIT_SUMMARY" >> $GITHUB_STEP_SUMMARY
