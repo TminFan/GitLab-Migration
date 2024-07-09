@@ -12,7 +12,7 @@ gh extension install github/gh-actions-importer
 
 # verify the actions importer extension is installed
 version_command="gh actions-importer version"
-if ! $version_command &> /dev/null;then
+if ! $version_command &> /dev/null; then
     echo "<$version_command> could not be found"
     exit 1
 else
