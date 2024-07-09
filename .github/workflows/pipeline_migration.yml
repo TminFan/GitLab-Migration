@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       workflow_migration_audit:
-        description: "Whether audit pipeline migration or not"
+        description: "Audit pipeline migration?"
         required: false
         default: false
         type: boolean
@@ -17,12 +17,17 @@ on:
         required: true
         type: string
       gitlab_user_name:
-        description: "GitLab user or group name. Audit mode can only accept group name"
+        description: "GitLab user or group name or group id. Audit mode can only accept group name"
         required: true
         type: string
       gitlab_repo_name:
         description: "GitLab repo name"
         required: true
+        type: string
+      gitlab_base_url:
+        description: "GitLab base instance url. e.g. https://gitlab.com"
+        required: false
+        default: "https://gitlab.ecs.vuw.ac.nz"
         type: string
 
 jobs:
@@ -36,6 +41,7 @@ jobs:
       github_repo_name: ${{ github.event.inputs.github_repo_name }}
       gitlab_user_name: ${{ github.event.inputs.gitlab_user_name}}
       gitlab_repo_name: ${{ github.event.inputs.gitlab_repo_name }}
+      gitlab_base_url: ${{ github.event.inputs.gitlab_base_url }}
     secrets: 
       GH_TOKEN: ${{ secrets.MIGRATION_PERSONAL_TOKEN }}
       GITLAB_TOKEN: ${{ secrets.GITLAB_MIGRATION_PERSONAL_TOKEN }}

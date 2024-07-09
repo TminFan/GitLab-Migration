@@ -32,6 +32,10 @@ on:
                 description: "GitLab repo name"
                 required: true
                 type: string
+            gitlab_base_url:
+              description: "GitLab base instance url. e.g. https://gitlab.com"
+              required: false
+              type: string
         secrets:
             GH_TOKEN:
                 description: "GitHub personal access token"
@@ -117,4 +121,4 @@ jobs:
               GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
               CUR_GITHUB_REPO: ${{ github.repository }}
               GITHUB_SHA: ${{ github.sha }}
-            run: ${{ inputs.script_file_path }} ${{ inputs.workflow_migration_audit }} ${{ inputs.github_user_name }} ${{ inputs.github_repo_name }} ${{ inputs.gitlab_user_name }} ${{ inputs.gitlab_repo_name }}
+            run: ${{ inputs.script_file_path }} ${{ inputs.workflow_migration_audit }} ${{ inputs.github_user_name }} ${{ inputs.github_repo_name }} ${{ inputs.gitlab_user_name }} ${{ inputs.gitlab_repo_name }} ${{ inputs.gitlab_base_url }}
