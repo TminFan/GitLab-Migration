@@ -5,6 +5,10 @@ github_repo_name=$2
 gitlab_user_name=$3
 gitlab_repo_full_path=$4
 
+fqdn_raw=$gitlab_repo_full_path
+fqdn="${fqdn_raw#https://}"
+fqdn="${fqdn#http://}"
+gitlab_repo_full_path=$fqdn
 
 if [[ -n $GH_TOKEN && -n $GITLAB_TOKEN ]]; then
     # Check if a GitHub repo with the given repo name has already existed

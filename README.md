@@ -26,7 +26,7 @@ Generating Personal Access Tokens:
 - After generating the tokens, store them in your GitHub repository:
 - Go to your repository's settings.
 - Navigate to 'Secrets', then click on 'Actions'.
-- Create new secrets, naming them to **MIGRATION_PERSONAL_TOKEN** for GitHub PAT and **GITLAB_MIGRATION_PERSONAL_TOKEN** for GitLab PAT.
+- **Create new secrets**, naming them to **GH_TOKEN** for GitHub PAT and **GITLAB_TOKEN** for GitLab PAT.
 - Paste the respective tokens as the values for these secrets.
 - These tokens will enable secure interactions with GitHub and GitLab APIs during the migration process. For more information, see GitHub's guide on repository secrets [GitHub secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions).
 
