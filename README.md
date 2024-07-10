@@ -53,16 +53,23 @@ The repository migration is handled by the repo_migration.yml workflow. To start
 
 This process will migrate the specified repository from GitLab to GitHub according to the parameters you set.
 
-| Input Fields          | Field Description   | Option   | Default Value | Value Type |
-|-----------------------|---------------------|----------|---------------|------------|
-| GitHub user name      | User account name   | Required | None          | String     |
-| GitHub repo name      | New or existing     |          |               |            |
-|                       | GitHub project name | Required | None          | String     |
-| GitLab user name      | User account name   | Required | None          | String     |
-| GitLab repo full path | Full path of the    | Required | None          | String     |
-|                       | repository url      |          |               |            |
-|                       | except for the      |          |               |            |
-|                       | prefix 'https://'   |          |               |            |
+<table>
+<thead>
+<tr><th>Input Fields</th><th>Field Description</th><th>Option</th><th>Default Value</th><th>Value Type</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>GitHub user name</td><td>User account name</td><td>Required</td><td>None</td><td>String</td>
+</tr>
+<tr>
+<td>GitHub repo name</td><td>New or existing GitHub project name</td><td>Required</td><td>None</td><td>String</td>
+</tr>
+<tr><td>GitLab user name</td><td>User account name</td><td>Required</td><td>None</td><td>String</td></tr>
+<tr>
+<td>GitLab repo full path</td><td>Fully Qualified Domain Name</td><td>Required</td><td>None</td><td>String</td>
+</tr>
+</tbody>
+</table>
 
 ### Audit Pipeline Migration for a GitLab Group
 Before proceeding with the migration of pipelines, users have the option to view an audit report, which helps in assessing the migration setup and requirements. Follow these steps to generate and view the audit report:
@@ -127,17 +134,27 @@ The process for migrating pipelines using the GitHub Actions Importer is similar
 
 This workflow leverages the same setup as the audit process but without selecting the audit option, allowing for a direct migration of pipelines from GitLab to GitHub.
 
-| Input Fields              | Field Description    | Option   | Default Value      | Value Type |
-|---------------------------|----------------------|----------|--------------------|------------|
-| Audit pipeline migration? | Whether audit or not | Optional | false              | Boolean    |
-| GitHub user name          | User account name    | Required | None               | String     |
-| GitHub repo name          | New or existing      | Required | None               | String     |
-|                           | GitHub project name  |          |                    |            |
-| GitLab user name or       | User account name    | Required | None               | String     |
-| group name or             | or group name or     |          |                    |            |
-| group id                  | group Id             |          |                    |            |
-| GitLab repo name          | Existing GitLab      | Required | None               | String     |
-|                           | project name         |          |                    |            |
-| GitLab base instance url  | The link to the      | Optional | https://gitlab.com | String     |
-|                           | GitLab you're trying |          |                    |            |
-|                           | to connect to        |          |                    |            |
+<table>
+<thead>
+<tr><th>Input Fields</th><th>Field Description</th><th>Option</th><th>Default Value</th><th>Value Type</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>Audit pipeline migration?</td><td>Whether audit or not</td><td>Optional</td><td>false</td><td>Boolean</td>
+</tr>
+<tr>
+<td>GitHub user name</td><td>User account name</td><td>Required</td><td>None</td><td>String</td>
+</tr>
+<tr>
+<td>GitHub repo name</td><td>New or existing GitHub project name</td><td>Required</td><td>None</td><td>String</td>
+</tr>
+<tr>
+<td>GitLab user name or group name or group ID</td><td>User account name or group name or group ID</td><td>Required</td><td>None</td><td>String</td></tr>
+<tr>
+<td>GitLab repo name</td><td>Existing GitLab project name</td><td>Required</td><td>None</td><td>String</td>
+</tr>
+<tr>
+<td>GitLab base instance url</td><td>The link to the GitLab you're trying to connect to</td><td>Optional</td><td>https://gitlab.com</td><td>String</td>
+</tr>
+</tbody>
+</table>
