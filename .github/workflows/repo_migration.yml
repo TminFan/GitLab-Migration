@@ -16,7 +16,7 @@ on:
         required: true
         type: string
       gitlab_repo_full_path:
-        description: "GitLab repo full path. e.g. gitlab.com/user-account/project1"
+        description: "GitLab repo fully qualified domain name. e.g. https://gitlab.com/user-account/project1"
         required: true
         type: string
 
