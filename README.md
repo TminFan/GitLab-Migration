@@ -5,32 +5,32 @@ This repository leverages GitHub Actions, the Actions Importer tool, and various
 ## Getting started
 To begin using this migration tool, either fork or clone the **ecs_gitlab_migration** repository to your GitHub account.
 
-#### Prerequisites
+### Prerequisites
 Generate Personal Access Tokens (PATs) for both GitHub and GitLab, and securely store them as repository secrets. These tokens are essential for authenticating and authorizing the migration process between the platforms.
 
 Generating Personal Access Tokens:
 1. GitHub PAT:
-- Navigate to your GitHub account settings.
-- Click on 'Developer settings', then 'Personal access tokens'.
-- Click 'Generate new token', select the necessary permissions, and create the token.
-- For a detailed guide, refer to GitHub's official documentation on creating a PAT [GitHub PAT (classic)](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic).
+    - Navigate to your GitHub account settings.
+    - Click on 'Developer settings', then 'Personal access tokens'.
+    - Click 'Generate new token', select the necessary permissions, and create the token.
+    - For a detailed guide, refer to GitHub's official documentation on creating a PAT [GitHub PAT (classic)](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic).
 
 2. GitLab PAT:
-
-- Go to your GitLab profile settings.
-- Under 'Access Tokens', choose 'Add a personal access token'.
-- Set the required permissions for the token and generate it.
-- For more information, see GitLab's guide on personal access tokens [GitLab PAT](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html).
+    - Go to your GitLab profile settings.
+    - Under 'Access Tokens', choose 'Add a personal access token'.
+    - Set the required permissions for the token and generate it.
+    - For more information, see GitLab's guide on personal access tokens [GitLab PAT](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html).
 
 3. Storing Tokens as Secrets:
-- After generating the tokens, store them in your GitHub repository:
-- Go to your repository's settings.
-- Navigate to 'Secrets', then click on 'Actions'.
-- **Create new secrets**, naming them to **GH_TOKEN** for GitHub PAT and **GITLAB_TOKEN** for GitLab PAT.
-- Paste the respective tokens as the values for these secrets.
-- These tokens will enable secure interactions with GitHub and GitLab APIs during the migration process. For more information, see GitHub's guide on repository secrets [GitHub secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions).
+    - After generating the tokens, store them in your GitHub repository:
+    - Go to your repository's settings.
+    - Navigate to 'Secrets', then click on 'Actions'.
+    - **Create new secrets**, naming them to **GH_TOKEN** for GitHub PAT and **GITLAB_TOKEN** for GitLab PAT.
+    - Paste the respective tokens as the values for these secrets.
 
-Select the following permission scopes for GitHub PAT and GitLab PAT<br>
+These tokens will enable secure interactions with GitHub and GitLab APIs during the migration process. For more information, see GitHub's guide on repository secrets [GitHub secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions).
+
+**Select the following permission scopes for GitHub PAT and GitLab PAT**\
 GitHub PAT (classic)
 - [x] repo
 - [x] workflow
@@ -71,7 +71,7 @@ This process will migrate the specified repository from GitLab to GitHub accordi
 </tbody>
 </table>
 
-### Audit Pipeline Migration for a GitLab Group
+#### Audit Pipeline Migration for a GitLab Group
 Before proceeding with the migration of pipelines, users have the option to view an audit report, which helps in assessing the migration setup and requirements. Follow these steps to generate and view the audit report:
 
 **Steps to Generate the Audit Report**
