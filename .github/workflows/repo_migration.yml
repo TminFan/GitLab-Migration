@@ -31,5 +31,5 @@ jobs:
       gitlab_user_name: ${{ github.event.inputs.gitlab_user_name }}
       gitlab_repo_name: ${{ github.event.inputs.gitlab_repo_full_path }}
     secrets: 
-      GH_TOKEN: ${{ secrets.MIGRATION_PERSONAL_TOKEN }}
-      GITLAB_TOKEN: ${{ secrets.GITLAB_MIGRATION_PERSONAL_TOKEN }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
