@@ -154,7 +154,7 @@ This workflow leverages the same setup as the audit process but without selectin
 <td>GitLab repo name</td><td>Existing GitLab project name</td><td>Required</td><td>None</td><td>String</td>
 </tr>
 <tr>
-<td>GitLab base instance url</td><td>The link to the GitLab you're trying to connect to</td><td>Optional</td><td>https://gitlab.com</td><td>String</td>
+<td>GitLab base instance url</td><td>The link to the GitLab you're trying to connect to</td><td>Optional</td><td>https://gitlab.ecs.vuw.ac.nz</td><td>String</td>
 </tr>
 </tbody>
 </table>
