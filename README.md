@@ -1,6 +1,6 @@
 # GitLab Repository and Pipelines Migration Automation
 
-This repository leverages GitHub Actions, the Actions Importer tool, and various Git commands to automate the migration of repositories and pipelines from GitLab, including instances on self-hosted servers, to GitHub. This process is designed to streamline the transfer of codebases and CI/CD configurations, ensuring a seamless transition to GitHub.
+This repository leverages GitHub Actions, the Actions Importer tool, and various Git commands to automate the migration of repositories and pipelines from GitLab to GitHub. This process is designed to streamline the transfer of codebases and CI/CD configurations, ensuring a seamless transition to GitHub.
 
 ## Getting started
 To begin using this migration tool, either fork or clone the **ecs_gitlab_migration** repository to your GitHub account.
