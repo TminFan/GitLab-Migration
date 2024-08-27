@@ -16,6 +16,11 @@ on:
                 required: false
                 default: false
                 type: boolean
+            is_github_organisation:
+                description: "Whether the migrated repository is under a GitHub organisation or not"
+                required: false
+                default: false
+                type: boolean
             github_user_name:
                 description: "GitHub user name"
                 required: true
@@ -44,6 +49,9 @@ on:
                 description: "GitLab personal access token"
                 required: true
 
+env:
+  executable_file_artifact_name: ${{ format('executable-file-{0}', inputs.github_repo_name) }}
+
 jobs:
     validate-file-execution-permission:
       runs-on: ubuntu-latest
@@ -62,13 +70,14 @@ jobs:
               ls
               chmod +x ${{ inputs.script_file_path }}
             fi
-            tar -cvf executable_file.tar ${{ inputs.script_file_path }}
+            tar -cvf ${{ env.executable_file_artifact_name }}.tar ${{ inputs.script_file_path }}
 
         - name: Upload executable as artifact
+          id: artifact-upload
           uses: actions/upload-artifact@v4
           with:
-            name: executable-file
-            path: ./executable_file.tar
+            name: ${{ env.executable_file_artifact_name }}
+            path: ./${{ env.executable_file_artifact_name }}.tar
             if-no-files-found: error
 
     run-repo-migration-script:
@@ -84,17 +93,17 @@ jobs:
             - name: Download executable file
               uses: actions/download-artifact@v4
               with:
-                name: executable-file
+                name: ${{ env.executable_file_artifact_name }}
                 path: ./
 
             - name: Unpack the tar file
-              run: tar -xvf executable_file.tar
+              run: tar -xvf ${{ env.executable_file_artifact_name }}.tar
             
             - name: Run repo migration script
               env:
                 GH_TOKEN: ${{ secrets.GH_TOKEN }}
                 GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }} 
-              run: ${{ inputs.script_file_path }} ${{ inputs.github_user_name }} ${{ inputs.github_repo_name }} ${{ inputs.gitlab_user_name }} ${{ inputs.gitlab_repo_name }}
+              run: ${{ inputs.script_file_path }} ${{ inputs.github_user_name }} ${{ inputs.github_repo_name }} ${{ inputs.gitlab_user_name }} ${{ inputs.gitlab_repo_name }} ${{ inputs.is_github_organisation }}
 
     run-pipeline-migration-script:
         needs: validate-file-execution-permission
@@ -109,11 +118,11 @@ jobs:
           - name: Download executable file
             uses: actions/download-artifact@v4
             with:
-              name: executable-file
+              name: ${{ env.executable_file_artifact_name }}
               path: ./
 
           - name: Unpack the tar file
-            run: tar -xvf executable_file.tar
+            run: tar -xvf ${{ env.executable_file_artifact_name }}.tar
 
           - name: Run pipeline migration script
             env:
@@ -122,3 +131,54 @@ jobs:
               CUR_GITHUB_REPO: ${{ github.repository }}
               GITHUB_SHA: ${{ github.sha }}
             run: ${{ inputs.script_file_path }} ${{ inputs.workflow_migration_audit }} ${{ inputs.github_user_name }} ${{ inputs.github_repo_name }} ${{ inputs.gitlab_user_name }} ${{ inputs.gitlab_repo_name }} ${{ inputs.gitlab_base_url }}
+
+    delete-artifacts:
+      needs: [validate-file-execution-permission, run-repo-migration-script, run-pipeline-migration-script]
+      runs-on: ubuntu-latest
+      steps:
+        - name: Check out the repository on the runner
+          uses: actions/checkout@v4
+          with:
+            persist-credentials: false
+
+        - name: Get current workflow artifacts' IDs
+          id: get-artifacts-ids
+          env:
+            GH_TOKEN: ${{ secrets.GH_TOKEN }}
+            PARSER_PY_FILE_PATH: ./parser_scripts/github_artifacts_info_parser.py
+            INFO_OUTPUT_FILE_PATH: ./api_calls_info/parse_artifacts.json
+          run: |
+            all_artifacts=$(gh api \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts)
+            echo "${all_artifacts}" > ${{ env.INFO_OUTPUT_FILE_PATH }}
+            chmod +x ${{ env.PARSER_PY_FILE_PATH }}
+            python ${{ env.PARSER_PY_FILE_PATH }}
+
+        - name: Get current workflow artifacts
+          id: artifacts-ids
+          env:
+            GH_TOKEN: ${{ secrets.GH_TOKEN }}
+            FILE_PATH: ./parser_outputs/artifact_info_parsed.json
+          run: |
+            chmod +x ${{ env.FILE_PATH }}
+            artifacts_ids=$(jq -c '.artifacts_ids' ${{ env.FILE_PATH }})
+            echo "${artifacts_ids}"
+            echo "ARTIFACTS_IDs=$artifacts_ids" >> "$GITHUB_OUTPUT"
+
+        - name: Delete artifacts
+          env: 
+            GH_TOKEN: ${{ secrets.GH_TOKEN }}
+            ARTIFACTS_IDs: ${{ steps.artifacts-ids.outputs.ARTIFACTS_IDs }}
+          run: |
+            readarray -t artifacts_ids < <(jq -r '.[]' <<<"${{ env.ARTIFACTS_IDs }}")
+            for artifact_id in "${artifacts_ids[@]}"
+            do
+              echo "${artifact_id}"
+              gh api \
+              --method DELETE \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              /repos/${{ github.repository }}/actions/artifacts/${artifact_id}
+            done
