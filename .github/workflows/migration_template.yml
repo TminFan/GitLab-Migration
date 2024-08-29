@@ -134,6 +134,10 @@ jobs:
 
     delete-artifacts:
       needs: [validate-file-execution-permission, run-repo-migration-script, run-pipeline-migration-script]
+      if: |
+        always() &&
+        (needs.run-repo-migration-script.result == 'success' || needs.run-pipeline-migration-script.result == 'skipped' || needs.validate-file-execution-permission.result == 'success') && 
+        (needs.run-repo-migration-script.result == 'skipped' || needs.run-pipeline-migration-script.result == 'success' || needs.validate-file-execution-permission.result == 'success')
       runs-on: ubuntu-latest
       steps:
         - name: Check out the repository on the runner
@@ -146,7 +150,7 @@ jobs:
           env:
             GH_TOKEN: ${{ secrets.GH_TOKEN }}
             PARSER_PY_FILE_PATH: ./parser_scripts/github_artifacts_info_parser.py
-            INFO_OUTPUT_FILE_PATH: ./api_calls_info/parse_artifacts.json
+            INFO_OUTPUT_FILE_PATH: ./parse_artifacts.json
           run: |
             all_artifacts=$(gh api \
             -H "Accept: application/vnd.github+json" \
@@ -160,7 +164,7 @@ jobs:
           id: artifacts-ids
           env:
             GH_TOKEN: ${{ secrets.GH_TOKEN }}
-            FILE_PATH: ./parser_outputs/artifact_info_parsed.json
+            FILE_PATH: ./artifact_info_parsed.json
           run: |
             chmod +x ${{ env.FILE_PATH }}
             artifacts_ids=$(jq -c '.artifacts_ids' ${{ env.FILE_PATH }})

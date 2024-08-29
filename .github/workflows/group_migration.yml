@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       github_user_name:
-        description: "GitHub user name"
+        description: "GitHub organization name"
         required: true
         type: string
       gitlab_group_name:
@@ -27,7 +27,7 @@ jobs:
               env:
                 GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
                 PARSER_PY_FILE_PATH: ./parser_scripts/gitlab_group_project_info_parser.py
-                PARSED_OUTPUT_FILE_PATH: ./api_calls_info/all_gitlab_group_projects.json
+                PARSED_OUTPUT_FILE_PATH: ./all_gitlab_group_projects.json
               run: |
                 all_projects=$(curl --header "Authorization: Bearer ${{ env.GITLAB_TOKEN }}" "https://gitlab.com/api/v4/groups/test-migration-group/projects?simple=true")
                 echo "${all_projects}" > ${{ env.PARSED_OUTPUT_FILE_PATH }}
@@ -38,7 +38,7 @@ jobs:
               id: parsed-projects-ids
               env:
                 GH_TOKEN: ${{ secrets.GH_TOKEN }}
-                FILE_PATH: ./parser_outputs/parsed.json
+                FILE_PATH: ./parsed.json
               run: |
                 chmod +x ${{ env.FILE_PATH }}
                 projects_ids=$(jq -c '.projects' ${{ env.FILE_PATH }})
