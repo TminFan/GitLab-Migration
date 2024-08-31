@@ -1,0 +1,85 @@
+name: bulk-migration
+run-name: migrate GitLab group porjects to GitHub organization
+on:
+  workflow_dispatch:
+    inputs:
+      is_group_repository_migration:
+        description: "Is this migration for repositories in GitLab group to GitHub organization?"
+        required: true
+        type: boolean
+      github_user_or_organization_name:
+        description: "Enter GitHub organization name if the migration for group repositories, otherwise, enter GitHub username"
+        required: true
+        type: string
+      gitlab_user_or_group_name:
+        description: "Enter GitLab group name if the migration for group repositories, otherwise, enter GitLab username"
+        required: true
+        type: string
+      gitlab_base_instance:
+        description: "GitLab base instance url. e.g. https://gitlab.com or https://gitlab.ecs.vuw.ac.nz"
+        required: true
+        type: string
+
+jobs:
+    get-all-projects:
+        runs-on: ubuntu-latest
+        outputs:
+            ALL_PROJECTS: ${{ steps.parsed-projects-ids.outputs.PROJECTS_IDs }}
+        steps:
+            - name: Check out the repository on the runner
+              uses: actions/checkout@v4
+              with:
+                persist-credentials: false
+
+            - name: Get all projects in GitLab group
+              if: ${{ inputs.is_group_repository_migration == true }}
+              env:
+                GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+                PARSER_PY_FILE_PATH: ./parser_scripts/gitlab_info_parser.py
+                GitLab_INFO_FILE_PATH: ./all_gitlab_group_projects.json
+              run: |
+                all_projects=$(curl --header "Authorization: Bearer ${{ env.GITLAB_TOKEN }}" "https://gitlab.com/api/v4/groups/test-migration-group/projects?simple=true")
+                echo "${all_projects}" > ${{ env.GitLab_INFO_FILE_PATH }}
+                chmod +x ${{ env.PARSER_PY_FILE_PATH }}
+                python ${{ env.PARSER_PY_FILE_PATH }} ${{ env.GitLab_INFO_FILE_PATH }}
+
+            - name: Get all projects in the given GitLab user account
+              if: ${{ inputs.is_group_repository_migration == false }}
+              env:
+                GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+                PARSER_PY_FILE_PATH: ./parser_scripts/gitlab_info_parser.py
+                GitLab_INFO_FILE_PATH: ./all_gitlab_user_projects.json
+              run: |
+                all_projects=$(curl --header "Authorization: Bearer ${{ env.GITLAB_TOKEN }}" "https://gitlab.com/api/v4/users/t.fan/projects?simple=true")
+                echo "${all_projects}" > ${{ env.GitLab_INFO_FILE_PATH }}
+                chmod +x ${{ env.PARSER_PY_FILE_PATH }}
+                python ${{ env.PARSER_PY_FILE_PATH }} ${{ env.GitLab_INFO_FILE_PATH }}
+  
+            - name: Parse Json format of project data and store in GITHUB_OUTPUT
+              id: parsed-projects-ids
+              env:
+                GH_TOKEN: ${{ secrets.GH_TOKEN }}
+                FILE_PATH: ./parsed.json
+              run: |
+                chmod +x ${{ env.FILE_PATH }}
+                projects_ids=$(jq -c '.projects' ${{ env.FILE_PATH }})
+                echo "PROJECTS_IDs=${projects_ids}" >> "$GITHUB_OUTPUT"
+
+    migrate-group:
+        needs: get-all-projects
+        strategy:
+            matrix:
+                repositories: ${{ fromJSON(needs.get-all-projects.outputs.ALL_PROJECTS) }}
+            max-parallel: 1
+        uses: ./.github/workflows/migration_template.yml
+        with:
+            migration_type: "repo"
+            script_file_path: "./repo-migration.sh"
+            is_github_organisation: ${{ inputs.is_group_repository_migration == true }}
+            github_user_name: ${{ inputs.github_user_or_organization_name }}
+            github_repo_name: ${{ matrix.repositories }}
+            gitlab_user_name: ${{ inputs.gitlab_user_or_group_name }}
+            gitlab_repo_name: ${{ format('{0}/{1}/{2}', inputs.gitlab_base_instance, inputs.gitlab_user_or_group_name, matrix.repositories) }}
+        secrets: 
+            GH_TOKEN: ${{ secrets.GH_TOKEN }}
+            GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}

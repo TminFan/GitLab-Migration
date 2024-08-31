@@ -26,6 +26,7 @@ jobs:
     with:
       migration_type: "repo"
       script_file_path: "./repo-migration.sh"
+      is_github_organisation: false
       github_user_name: ${{ github.event.inputs.github_user_name }}
       github_repo_name: ${{ github.event.inputs.github_repo_name }}
       gitlab_user_name: ${{ github.event.inputs.gitlab_user_name }}

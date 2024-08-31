@@ -39,10 +39,10 @@ GitLab PAT
 - [x] api
 - [x] read_api
 
-### Migration
+## Migration
 Repositories and pipelines are migrated using manually triggered GitHub Actions workflows, which require specific user inputs to tailor the migration process to individual requirements.
 
-#### Migrate A Repository from GitLab to GitHub
+### Migrate One Repository from GitLab to GitHub
 The repository migration is handled by the repo_migration.yml workflow. To start a migration, follow these steps:
 
 1. Navigate to the Actions Page: Go to the 'Actions' tab in your GitHub repository.
@@ -71,7 +71,10 @@ This process will migrate the specified repository from GitLab to GitHub accordi
 </tbody>
 </table>
 
-#### Audit Pipeline Migration for a GitLab Group
+### Migrate Multi Repositories from a GitLab Group to a GitHub Organization
+
+
+### Audit Pipeline Migration for a GitLab Group
 Before proceeding with the migration of pipelines, users have the option to view an audit report, which helps in assessing the migration setup and requirements. Follow these steps to generate and view the audit report:
 
 **Steps to Generate the Audit Report**

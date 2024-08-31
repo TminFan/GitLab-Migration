@@ -1,6 +1,6 @@
-#python
 import json
 import os
+import sys
 
 def get_all_projects(data):
     projects = []
@@ -15,7 +15,8 @@ def get_all_projects(data):
     return projects
 
 if __name__ == "__main__":
-    file_path = os.path.join(os.getcwd(), "all_gitlab_group_projects.json")
+    file_name = sys.argv[1]
+    file_path = os.path.join(os.getcwd(), file_name)
 
     with open(file_path, "r") as f:
         data = json.load(f)

@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 
 def get_workflow_artifacts_ids(data):
     all_ids = []
@@ -15,7 +16,8 @@ def get_workflow_artifacts_ids(data):
     return all_ids
 
 if __name__ == "__main__":
-    file_path = os.path.join(os.getcwd(), "parse_artifacts.json")
+    file_name = sys.argv[1]
+    file_path = os.path.join(os.getcwd(), file_name)
 
     with open(file_path, "r") as f:
         data = json.load(f)

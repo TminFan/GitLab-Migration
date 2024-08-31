@@ -158,7 +158,7 @@ jobs:
             /repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts)
             echo "${all_artifacts}" > ${{ env.INFO_OUTPUT_FILE_PATH }}
             chmod +x ${{ env.PARSER_PY_FILE_PATH }}
-            python ${{ env.PARSER_PY_FILE_PATH }}
+            python ${{ env.PARSER_PY_FILE_PATH }} ${{ env.INFO_OUTPUT_FILE_PATH }}
 
         - name: Get current workflow artifacts
           id: artifacts-ids
