@@ -25,9 +25,9 @@ on:
         required: true
         type: string
       gitlab_base_url:
-        description: "GitLab base instance url. e.g. https://gitlab.com"
+        description: "GitLab base instance url. e.g. https://gitlab.com or https://gitlab.example.com"
         required: false
-        default: "https://gitlab.ecs.vuw.ac.nz"
+        default: "https://gitlab.com"
         type: string
 
 jobs:
